@@ -44,6 +44,12 @@ def login():
         return redirect(url_for('index'))
     return render_template('login.html', title = 'Sign In', form = form)
 
+@app.route('/explore')
+@login_required
+def explore():
+    posts = Post.query.order_by(Post.timestamp.desc()).all()
+    return render_template('index.html', title='Explore', posts=posts)
+
 @app.route('/logout')
 def logout():
     logout_user()
